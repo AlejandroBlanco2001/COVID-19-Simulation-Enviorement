@@ -3,9 +3,9 @@ class Edge{
     public NodoG destino;
     public float peso;
     
-    public Edge(NodoG inicio, NodoG destino){
+    public Edge(NodoG inicio, NodoG destino, float peso){
       this.inicio = inicio;
       this.destino = destino;
-      peso = 1;
+      this.peso = peso;
     }
 }

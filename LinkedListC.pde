@@ -127,8 +127,44 @@ public class LinkedListC<T> implements Iterable<T> {
         }
         return null;
     }
+    
+    public T get(Object item){
+        Node P = PTR;
+        while (P != null) {
+            if (P == item) {
+                return (T) P.Dato;
+            }
+            P = P.Link;
+        }
+        return null;
+    }
+    
+     /**
+     * Metodo que se encarga de eliminar de acuerdo a una posicion en la Lista Enlazada Simple, el nodo seleccionado
+     * @param index Posicion del Nodo a buscar
+     */
+    public void delete(int index){
+      Node P = PTR;
+      Node antP = PTR;
+      if(index == 0){
+        antP = PTR.Link;
+        PTR.Link = null;
+        PTR = null;
+        PTR = antP;
+      }else{
+        int i = 1;
+        while(i != index){
+          P = P.Link;
+          antP = P;
+          i += 1;
+        }
+        antP.Link = P.Link;
+        P.Link = null;
+        P = null;
+      } 
+    }
 
-    /**
+     /** //<>//
      * Metodo que devuelve el PTR
      * @return PTR Primer nodo de la Lista Enlazada Simple
      */

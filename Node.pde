@@ -1,11 +1,13 @@
 class NodoG{
   public int entradas;
-  public int limitEntradas;
   public int salidas;
-  public int limitSalidas;
   public int etiquetas;
-  public ArrayList<Edge> aristas;
+  public LinkedListC<Edge> aristas;
+  public LinkedListC<NodoG> adjacencyNodes;
+  public boolean isVisited;
   public boolean isInfected;
+  private float xCoord;
+  private float yCoord;
   
   public NodoG(int etiquetas){
     if((int) random(1,3) == 1){
@@ -13,30 +15,60 @@ class NodoG{
     }else{
       isInfected = false;
     }
-    aristas = new ArrayList();
+    xCoord = 0;
+    yCoord = 0;
+    aristas = new LinkedListC();
+    adjacencyNodes = new LinkedListC();
     salidas = 0;
     entradas = 0;
     this.etiquetas = etiquetas;  
   }
   
   public boolean isBalanced(){
-    return entradas == 1 && salidas == 1;
+    return entradas > 1 && salidas > 1;
   }
   
-  public void addEdge(Edge edge){
+  public boolean addEdge(Edge edge){
     if(edge != null){
       if(checkEdge(edge) != true){
-        aristas.add(edge);
+        if(edge.destino != this){
+          adjacencyNodes.add(edge.destino);
+        }
+        Edge inverse = new Edge(edge.destino,edge.inicio,0);
+        if(edge.destino.checkEdge(inverse) == true){
+          float peso = edge.destino.getCost(inverse);
+          Edge e = new Edge(edge.inicio,edge.destino,peso);
+          aristas.add(e);
+        }else{
+          aristas.add(edge);
+        }
+        return true;
       }
+      return false;
     }
+    return false;
   }
   
   public boolean checkEdge(Edge edge){
-    for(Edge e : aristas){
-      if(e.inicio == edge.inicio && e.destino == edge.destino){
+    for(Edge e : this.aristas){
+      if(e.inicio.etiquetas == edge.inicio.etiquetas && e.destino.etiquetas == edge.destino.etiquetas){
         return true;
       }
     }
     return false;
-  }
+   }
+   
+   public float getCost(Edge edge){
+     for(Edge e : this.aristas){
+      if(e.inicio.etiquetas == edge.inicio.etiquetas && e.destino.etiquetas == edge.destino.etiquetas){
+        return e.peso;
+      }
+     }
+     return 0f;
+   }
+   
+   public void drawNode(float x, float y){
+     xCoord = x;
+     yCoord = y;
+   }
 }

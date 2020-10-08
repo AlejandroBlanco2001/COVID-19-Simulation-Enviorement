@@ -3,81 +3,48 @@ Graph graph;
 
 void setup(){
    graph = new Graph();
-   graph.createNode(5);
+   graph.createNode(15);
    graph = crearGrafo(graph);
    for(NodoG g: graph.getNodes()){
      for(Edge e: g.aristas){
-       System.out.println("ORIGEN " + e.inicio.etiquetas + "| DESTINO " + e.destino.etiquetas);
+       System.out.println("ORIGEN " + e.inicio.etiquetas + "| DESTINO " + e.destino.etiquetas + " CON UN PESO DE " + e.peso);
      }
    }
+   APathfinding pathF = new APathfinding();
+   pathF.find(graph.nodes.get(0),graph.nodes.get(1));
 }
 
 public Graph crearGrafo(Graph grafo){ //<>//
-  int conexionR;
   NodoG randomN;
-  if(isConexo(grafo) == true){ //<>//
-    return grafo;
-  }else{
-     conexionR = (int) random(0,3);
-     randomN = graph.getRandomNode();
-     NodoG g = graph.getRandomNode();
+  int conex = (int) random(0,2);
+  while(isConexo(grafo) != true){
+     randomN = grafo.getRandomNode();
+     NodoG g = grafo.getRandomNode();
      while(g.etiquetas == randomN.etiquetas){
-       g = graph.getRandomNode();
+       g = grafo.getRandomNode();
      }  
-     if(conexionR == 0){
-         g.salidas = 1;
-         randomN.entradas = 1;
-         g.addEdge(new Edge(g,randomN));
-   }else if(conexionR == 1){
-         g.entradas = 1;
-         randomN.salidas = 1;
-         randomN.addEdge(new Edge(randomN,g));  
+     float weight = random(0,101);
+     Edge e;
+     if(conex == 0){
+       e = new Edge(g,randomN,weight);
+       if(g.addEdge(e) == true){
+         randomN.salidas += 1;
+         g.entradas += 1;
+       }
      }else{
-         g.entradas = 1;
-         g.salidas = 1;
-         randomN.entradas = 1;
-         randomN.salidas = 1;
-         randomN.addEdge(new Edge(randomN,g));  
-         g.addEdge(new Edge(g,randomN));
-     }
-    return crearGrafo(grafo);
-  }
+       e = new Edge(randomN, g,weight);
+       if(randomN.addEdge(e) == true){
+         randomN.entradas += 1;
+         g.salidas += 1;
+       }
+     }  //<>//
+  } 
+  return grafo;
 }
-
-/*
-public ArrayList<NodoG> crearGrafo(ArrayList<NodoG> grafo){
-  int conexionR;
-  NodoG randomN;
-  if(isConexo(grafo) == true){
-    return grafo;
-  }else{
-    conexionR = (int) random(0,1);
-    randomN = grafo.get((int) random(0,grafo.size()));
-    for(NodoG g: grafo){
-      if(conexionR == 0){
-        if(g.etiquetas != randomN.etiquetas){
-          if(g.salidas > -1){
-            g.salidas = 1;
-            randomN.entradas = 1;
-            g.addEdge(new Edge(g,randomN));
-          }
-        }else{
-          if(randomN.salidas > -1){
-            g.entradas = 1;
-            randomN.salidas = 1;
-            randomN.addEdge(new Edge(randomN,g));  
-          }
-        }
-      }
-    }
-    return crearGrafo(grafo);
-  }
-}
-*/
 
 public boolean isConexo(Graph grafo){
   for(NodoG g: grafo.getNodes()){
-    if(g.isBalanced() == false){ //<>//
+    if(g.isBalanced() == false){
       return false;
     }
   }

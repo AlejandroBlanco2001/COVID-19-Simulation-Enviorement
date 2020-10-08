@@ -20,4 +20,6 @@ class Graph{
   public LinkedListC<NodoG> getNodes(){
     return nodes;
   } 
+  
+
 }
