@@ -68,30 +68,30 @@ public class APathfinding{
   
   public void find(NodoG begin, NodoG end){
     NodeStar beginS = new NodeStar(begin);
-    beginS.setNode(begin); //<>//
+    beginS.setNode(begin); 
     beginS.setF(setH(begin,end));
     open.add(beginS);
-    NodeStar temp; //<>//
-    while(beginS.getNode() != end){ //<>//
-      for(NodoG n : beginS.getNode().adjacencyNodes){ //<>//
-        if(isIn(n,closed) == false){ //<>//
-          temp = new NodeStar(n); //<>//
-          temp.setH(setH(temp.getNode(),end)); //<>//
-          temp.setG(setG(beginS, temp)); //<>//
-          temp.setF(); //<>//
-          temp.setParent(beginS); //<>//
-          update(temp,open);  //<>//
+    NodeStar temp; 
+    while(beginS.getNode() != end){ 
+      for(NodoG n : beginS.getNode().adjacencyNodes){ 
+        if(isIn(n,closed) == false){ 
+          temp = new NodeStar(n); 
+          temp.setH(setH(temp.getNode(),end)); 
+          temp.setG(setG(beginS, temp)); 
+          temp.setF(); 
+          temp.setParent(beginS); 
+          update(temp,open);  
         }
       }
       closed.add(beginS);
-      int deleteIndex = getMinimumFCostIndex(open,beginS.getNode().etiquetas); //<>// //<>// //<>//
-      open.delete(deleteIndex);  //<>//
-      beginS = getMinimumFCost(open); //<>//
+      int deleteIndex = getMinimumFCostIndex(open,beginS.getNode().etiquetas);
+      open.delete(deleteIndex);  
+      beginS = getMinimumFCost(open); 
       if(beginS.getNode() == end){
-        closed.add(beginS); //<>//
+        closed.add(beginS); 
       }
-    } //<>//
-    construct(closed); //<>// //<>//
+    } 
+    construct(closed); 
   }
   
   public boolean isIn(NodoG nodo,LinkedListC<NodeStar> lista){
@@ -102,17 +102,17 @@ public class APathfinding{
     }
     return false;
   } 
-   //<>//
-  public void construct(LinkedListC<NodeStar> open){ //<>//
-    NodeStar parent = open.get(open.size()-1); //<>//
+
+  public void construct(LinkedListC<NodeStar> open){
+    NodeStar parent = open.get(open.size()-1); 
     float sum = 0;
-    while(parent != null){ //<>//
-      path.add(parent.getNode()); //<>//
+    while(parent != null){ 
+      path.add(parent.getNode()); 
       sum += parent.getFCost();
-      parent = parent.getParentN(); //<>//
+      parent = parent.getParentN();
     }
-    for(NodoG node : path){ //<>//
-      System.out.println(node.etiquetas); //<>//
+    for(NodoG node : path){
+      System.out.println(node.etiquetas); 
     }
     System.out.println(sum);
   }
@@ -165,13 +165,12 @@ public class APathfinding{
     for(NodeStar starN : openList){
       if(starN.getNode().etiquetas == updateItem.getNode().etiquetas){
         if(starN.getG() > updateItem.getG()){
-          starN.setF(updateItem.getG() + starN.getH()); //<>//
-          starN.setParent(updateItem.getParentN()); //<>//
+          starN.setF(updateItem.getG() + starN.getH()); 
+          starN.setParent(updateItem.getParentN()); 
         }
-        return; //<>//
+        return; 
       }
     }
     openList.add(updateItem);
   }
- 
 }

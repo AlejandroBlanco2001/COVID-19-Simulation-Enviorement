@@ -6,6 +6,7 @@ import java.util.Iterator;
  * @author alexz
  * @param <T> Clase generica a pasar
  */
+ 
 public class LinkedListC<T> implements Iterable<T> {
 
     private Node PTR;
@@ -164,7 +165,7 @@ public class LinkedListC<T> implements Iterable<T> {
       } 
     }
 
-     /** //<>//
+     /**
      * Metodo que devuelve el PTR
      * @return PTR Primer nodo de la Lista Enlazada Simple
      */

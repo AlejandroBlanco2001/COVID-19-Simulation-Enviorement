@@ -1,6 +1,4 @@
 class NodoG{
-  public int entradas;
-  public int salidas;
   public int etiquetas;
   public LinkedListC<Edge> aristas;
   public LinkedListC<NodoG> adjacencyNodes;
@@ -19,13 +17,7 @@ class NodoG{
     yCoord = 0;
     aristas = new LinkedListC();
     adjacencyNodes = new LinkedListC();
-    salidas = 0;
-    entradas = 0;
     this.etiquetas = etiquetas;  
-  }
-  
-  public boolean isBalanced(){
-    return entradas > 1 && salidas > 1;
   }
   
   public boolean addEdge(Edge edge){
