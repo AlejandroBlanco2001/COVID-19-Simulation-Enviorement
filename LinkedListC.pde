@@ -149,21 +149,17 @@ public class LinkedListC<T> implements Iterable<T> {
       Node antP = PTR;
       if(index == 0){
         antP = PTR.Link;
-        PTR.Link = null;
-        PTR = null;
-        PTR = antP;
-      }else{
-        int i = 1;
+        PTR = antP; //<>// //<>// //<>//
+      }else{ //<>// //<>// //<>//
+        int i = 0;
         while(i != index){
-          P = P.Link;
           antP = P;
+          P = P.Link;
           i += 1;
         }
         antP.Link = P.Link;
-        P.Link = null;
-        P = null;
-      } 
-    }
+      }  //<>// //<>// //<>//
+    } //<>// //<>// //<>//
 
      /**
      * Metodo que devuelve el PTR
@@ -188,8 +184,8 @@ public class LinkedListC<T> implements Iterable<T> {
         int cont = 0;
         Node P = PTR;
         while (P != null) {
-            cont++;
             P = P.Link;
+            cont += 1;
         }
         return cont;
     }

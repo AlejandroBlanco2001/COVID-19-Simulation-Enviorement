@@ -1,3 +1,4 @@
+// ESTA CLASE NO SIRVE PARA NADA, SOLO QUE LA HICE Y ME DEMORE 12 HORAS Y NO LA VOY A QUITAR
 public class APathfinding{
   
   public LinkedListC<NodeStar> open;
