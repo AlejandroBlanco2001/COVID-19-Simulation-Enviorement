@@ -4,8 +4,7 @@ double inicio;
 
 
 void setup(){
-    size(1080,720);
-
+   size(1080,720);
    int r = (int) random(0,3);
    graph = new Graph();
    graph.createNode(12);

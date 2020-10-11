@@ -65,6 +65,7 @@ class Graph{
       if(cont == randomPacienteCero){
         g.setcontagiadoEn(0);
         infected.add(new Infectado(g));
+        g.setInfected(true);
       }else{
         healthy.add(new Sano(g));
       }
@@ -134,6 +135,14 @@ class Graph{
         row.setString("Tiene Mascarilla","Si");
       }else{
         row.setString("Tiene Mascarilla","Noi");
+      }
+    }
+    if(healthy.size() != 0){
+      System.out.println("---------------------- RUTA MÁS PROBABLE DE INFECCION PARA LOS SANOS --------------------");
+      for(NodoG g : healthy){ //<>//
+        Sano s = (Sano) g;
+        s.getMayorRiesgoContagio(new DFSImplementation(), infected);
+        System.out.println(s.toString());
       }
     }
     saveTable(table,"dia_"+dia+".html");

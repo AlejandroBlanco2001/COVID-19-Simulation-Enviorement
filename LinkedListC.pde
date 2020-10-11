@@ -149,8 +149,8 @@ public class LinkedListC<T> implements Iterable<T> {
       Node antP = PTR;
       if(index == 0){
         antP = PTR.Link;
-        PTR = antP; //<>// //<>// //<>//
-      }else{ //<>// //<>// //<>//
+        PTR = antP; 
+      }else{ 
         int i = 0;
         while(i != index){
           antP = P;
@@ -158,9 +158,9 @@ public class LinkedListC<T> implements Iterable<T> {
           i += 1;
         }
         antP.Link = P.Link;
-      }  //<>// //<>// //<>//
-    } //<>// //<>// //<>//
-
+      } 
+    } 
+    
      /**
      * Metodo que devuelve el PTR
      * @return PTR Primer nodo de la Lista Enlazada Simple

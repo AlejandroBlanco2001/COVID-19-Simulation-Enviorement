@@ -2,12 +2,11 @@ class NodoG{
   public int etiquetas;
   protected LinkedListC<Edge> aristas;
   protected LinkedListC<NodoG> adjacencyNodes;
-  private int contagiadoEn;
-  private boolean isVisited;
-  private boolean hasMascarilla;
-  private boolean isInfected;
-  private float xCoord;
-  private float yCoord;
+  protected int contagiadoEn;
+  protected boolean hasMascarilla;
+  protected boolean isInfected;
+  protected float xCoord;
+  protected float yCoord;
   
   public NodoG(int etiquetas){
     if((int) random(1,3) == 1){
@@ -91,6 +90,10 @@ class NodoG{
      hasMascarilla = value;
    }
    
+   public void setInfected(boolean value){
+     isInfected = value;
+   }
+   
     public int getEtiquetas() {
         return etiquetas;
     }
@@ -105,10 +108,6 @@ class NodoG{
 
     public int getContagiadoEn() {
         return contagiadoEn;
-    }
-
-    public boolean isIsVisited() {
-        return isVisited;
     }
 
     public boolean isHasMascarilla() {
