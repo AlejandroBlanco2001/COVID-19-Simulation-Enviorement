@@ -2,12 +2,11 @@ private Graph graph;
 int contador = 0;
 double inicio; 
 
-
 void setup(){
+   graph = new Graph();
    size(1080,720);
    int r = (int) random(0,3);
-   graph = new Graph();
-   graph.createNode(12);
+   graph.createNode(5);
    graph = crearRanGrafo(graph);
    System.out.println("-----------------------DISPOSICION DE LA SIMULACION--------------------------------");
    for(NodoG g: graph.getNodes()){
@@ -27,6 +26,7 @@ void setup(){
 void draw(){
   if(!graph.isAllInfected()){
     if(System.currentTimeMillis() - inicio > 1000){
+      saveFrame("/data/temp/Day"+contador+".png");
       contador += 1;
       avanzaGeneracion();
       graph.update(contador);
@@ -37,7 +37,10 @@ void draw(){
       inicio = System.currentTimeMillis();
     }
   }else{
-    System.out.println("SE ACABO LA SIMULACION con " + contador + " iteraciones");
+    HTMLBuilder htmlB = new HTMLBuilder();
+    htmlB.createTableHtml(graph.tablas);
+    htmlB.seperateTagsTable();
+    System.out.println("SE ACABO LA SIMULACION con " + contador + " iteraciones, todos se murieron");
     noLoop();
   }
 }
@@ -62,25 +65,16 @@ public Graph crearRanGrafo(Graph grafo){
       nodos[i+1].addEdge(new Edge(next,nodos[i],peso));
     }
     int randomNumber = (int) random(0,nodos.length);
-     int randomConexion = (int) random(0,2);
-     while(randomNumber == i){
-       randomNumber = (int) random(0,nodos.length);
-     }
-     if(randomConexion == 0){
-       nodos[i].addEdge(new Edge(nodos[i],nodos[randomNumber],random(1,11)));
-     }else{
-       nodos[randomNumber].addEdge(new Edge(nodos[randomNumber],nodos[i],random(1,11)));
-     }
+    int randomConexion = (int) random(0,2);
+    while(randomNumber == i){
+      randomNumber = (int) random(0,nodos.length);
+    }
+    if(randomConexion == 0){
+      nodos[i].addEdge(new Edge(nodos[i],nodos[randomNumber],random(1,11)));
+    }else{
+      nodos[randomNumber].addEdge(new Edge(nodos[randomNumber],nodos[i],random(1,11)));
+    }
   }
   graph.convertList(Shuffle.getOrdered((nodos)));
   return graph;
 }
-
-/*
-   DFSImplementation dfs = new DFSImplementation();
-   for(NodoG infectados: graph.infected){
-     dfs.dfs(graph.nodes.get(0),infectados, new LinkedListC(),new LinkedListC(), graph.nodes.get(0));
-   }
-   LinkedListC<NodoG> camino = dfs.recorrido.getCaminoContaigoAlto();
-
-*/

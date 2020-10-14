@@ -1,0 +1,36 @@
+table{
+    width: 100%;
+    min-width: 500px;
+    border-collapse:collapse;
+    font-weight: bold;
+}
+
+table tr{
+    height: 50px;
+    background-color:#f6f3f7;
+    border-bottom:rgba(0,0,0,.05) 1px solid;
+}
+
+table td{
+    box-sizing: border-box;
+    padding-left: 30px;
+    content: center;
+    text-align:center;
+}
+
+table th{
+    height:30px;
+    background: #418a95;
+    color: #f6f3f7; 
+    font-size:12pt;
+    border:0px solid;
+}
+
+
+img{
+    display: block;
+    margin:auto;
+    width: 70%;
+    height : 50%;
+}
+
