@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException; 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class HTMLBuilder{
   
@@ -25,11 +27,23 @@ public class HTMLBuilder{
   
   public void seperateTagsTable(){
     String html;
-    String m[] = null;
-    for(int i = 0; i <= contadorDias; i++){
-      html = makeFileAString("\\temp\\day"+i+".html");
-      m = match(html,"<table>(.|\n)*?</table>");
-      tablasString.add(m[0]);
+    int begin = 0, end = 0;
+    // MEJOR MANERA -> CAUSA BUG String pat = "<table>(.|\\n)*</table>";
+    String m = "";
+    for(int i = 0; i <= contadorDias; i++){ //<>//
+        html = makeFileAString("\\temp\\day"+i+".html"); //<>//
+        Pattern pattern = Pattern.compile("<table>");
+        Matcher matcher = pattern.matcher(html); //<>//
+        while(matcher.find()){ //<>//
+          begin = matcher.start(); //<>//
+        }
+        pattern = Pattern.compile("</table>");
+        matcher = pattern.matcher(html);
+        while(matcher.find()){
+          end = matcher.end();
+        }
+        m = html.substring(begin,end+1); //<>// //<>//
+        tablasString.add(m); //<>//
     }
     createHTML(tablasString,"\\temp\\");
   }
@@ -49,8 +63,8 @@ public class HTMLBuilder{
             System.out.println("NO SE");
         }
         return sb.toString(); 
-  }
-  
+  } //<>//
+   //<>//
    public void createHTML(LinkedListC<String> tablas, String imgRoute){
      htmlFinalFile = createWriter("data/index.html");
      String css = "<link rel=\"stylesheet\" href=\"style.css\">";

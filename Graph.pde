@@ -88,7 +88,7 @@ class Graph{
       }
     }
     System.out.println("INFECTADOS POR DIA " + cont);
-    makeTablaRegistro(null);
+    makeTablaRegistro(null,0);
   }
   
  public boolean contains(LinkedListC<NodoG> lista, NodoG n){
@@ -115,9 +115,10 @@ class Graph{
     return nodes;
   } 
   
-  public Table makeTablaRegistro(NodoG g){
+  public Table makeTablaRegistro(NodoG g, int dia){
     if(this.table != null && g == null){
       table = new Table();
+      table.addColumn("Día");
       table.addColumn("Modo de la simulacion");
       table.addColumn("Cantidad de Nodos");
       table.addColumn("Etiqueta del Nodo");
@@ -126,6 +127,7 @@ class Graph{
       table.addColumn("Dia de infeccion"); 
     }else{
       TableRow row = table.addRow();
+      row.setInt("Día", dia);
       row.setInt("Modo de la simulacion",1);
       row.setInt("Cantidad de Nodos",nodes.size());
       row.setInt("Etiqueta del Nodo",g.etiquetas);
@@ -147,7 +149,7 @@ class Graph{
   public void reporteMinisterioDeSalud(int dia){
     for(NodoG g: nodes){
       System.out.println(g.toString());
-      table = makeTablaRegistro(g);
+      table = makeTablaRegistro(g,dia);
     }
     if(healthy.size() != 0){
       System.out.println("---------------------- RUTA MÁS PROBABLE DE INFECCION PARA LOS SANOS --------------------");
