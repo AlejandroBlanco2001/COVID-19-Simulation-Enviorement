@@ -1,4 +1,5 @@
 private Graph graph;
+private Graphics graphics;
 int contador = 0;
 double inicio; 
 
@@ -6,7 +7,8 @@ void setup(){
    graph = new Graph();
    size(1080,720);
    int r = (int) random(0,3);
-   graph.createNode(5);
+   graph = new Graph();
+   graph.createNode(20);
    graph = crearRanGrafo(graph);
    System.out.println("-----------------------DISPOSICION DE LA SIMULACION--------------------------------");
    for(NodoG g: graph.getNodes()){
@@ -21,21 +23,25 @@ void setup(){
    graph.setMode(r);
    graph.update();
    inicio = System.currentTimeMillis();
+   graphics = new Graphics(graph);
+   graphics.drawGraph();
 }
 
 void draw(){
+  
   if(!graph.isAllInfected()){
     if(System.currentTimeMillis() - inicio > 1000){
       saveFrame("/data/temp/Day"+contador+".png");
       contador += 1;
       avanzaGeneracion();
       graph.update(contador);
+      graphics.updateGraph(graph);
       System.out.println("REPORTE DEL MINISTERIO DE SALUD - DIA " + contador);
       System.out.println("SALUDABLES " + graph.getHealthy().size());
       graph.reporteMinisterioDeSalud(contador);
       System.out.println("--------------------------------------------------------------");
       inicio = System.currentTimeMillis();
-    }
+      }
   }else{
     HTMLBuilder htmlB = new HTMLBuilder();
     htmlB.createTableHtml(graph.tablas);
