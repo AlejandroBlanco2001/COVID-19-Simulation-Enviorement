@@ -39,10 +39,10 @@ public class Graphics{
     int n = 0;
     rect(10, 10, 800, 550);
     for (int i = 0; i < graph.nodes.size(); i++) {
-    Point punto = new Point ((int)random(50, 750),(int)random(50,500));
+    Point punto = new Point ((int)random(50, 650),(int)random(50,450));
     
     while (isIntersected(puntos, punto,i)) {
-      punto = new Point ((int)random(50, 750),(int)random(50,500));
+      punto = new Point ((int)random(50, 650),(int)random(50,450));
     }
     
      puntos[i] = punto;
