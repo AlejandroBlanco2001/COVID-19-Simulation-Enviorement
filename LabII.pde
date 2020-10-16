@@ -1,4 +1,5 @@
 private Graph graph;
+private Graphics graphics;
 int contador = 0;
 double inicio; 
 
@@ -7,7 +8,7 @@ void setup(){
    size(1080,720);
    int r = (int) random(0,3);
    graph = new Graph();
-   graph.createNode(12);
+   graph.createNode(20);
    graph = crearRanGrafo(graph);
    System.out.println("-----------------------DISPOSICION DE LA SIMULACION--------------------------------");
    for(NodoG g: graph.getNodes()){
@@ -22,20 +23,24 @@ void setup(){
    graph.setMode(r);
    graph.update();
    inicio = System.currentTimeMillis();
+   graphics = new Graphics(graph);
+   graphics.drawGraph();
 }
 
 void draw(){
+  
   if(!graph.isAllInfected()){
-    if(System.currentTimeMillis() - inicio > 1000){
+      if(System.currentTimeMillis() - inicio > 1000){
       contador += 1;
       avanzaGeneracion();
       graph.update(contador);
+      graphics.updateGraph(graph);
       System.out.println("REPORTE DEL MINISTERIO DE SALUD - DIA " + contador);
       System.out.println("SALUDABLES " + graph.getHealthy().size());
       graph.reporteMinisterioDeSalud(contador);
       System.out.println("--------------------------------------------------------------");
       inicio = System.currentTimeMillis();
-    }
+      }
   }else{
     System.out.println("SE ACABO LA SIMULACION con " + contador + " iteraciones");
     noLoop();
