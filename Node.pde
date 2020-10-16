@@ -9,11 +9,6 @@ class NodoG{
   protected float yCoord;
   
   public NodoG(int etiquetas){
-    if((int) random(1,3) == 1){
-      hasMascarilla = true;
-    }else{
-      hasMascarilla = false;
-    }
     isInfected = false;
     contagiadoEn = -1;
     xCoord = 0;

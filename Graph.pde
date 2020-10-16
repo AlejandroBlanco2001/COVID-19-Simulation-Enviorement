@@ -1,13 +1,15 @@
-Table table;
 class Graph{
   private LinkedListC<NodoG> nodes;
   private LinkedListC<NodoG> infected;
   private LinkedListC<NodoG> healthy;
+  public LinkedListC<Table> tablas;
+  private Table table;
   
   public Graph(){
     nodes = new LinkedListC();
     infected = new LinkedListC();
     healthy = new LinkedListC();
+    tablas = new LinkedListC();
     table = new Table();  
   }
   
@@ -20,7 +22,7 @@ class Graph{
     NodoG node;
     for(int i = 0; i < number; i++){
       node = new NodoG(i);
-      nodes.add(node);
+      this.nodes.add(node);
     }
   }
   
@@ -86,7 +88,7 @@ class Graph{
       }
     }
     System.out.println("INFECTADOS POR DIA " + cont);
-
+    makeTablaRegistro(null);
   }
   
  public boolean contains(LinkedListC<NodoG> lista, NodoG n){
@@ -113,40 +115,49 @@ class Graph{
     return nodes;
   } 
   
-  public void reporteMinisterioDeSalud(int dia){
-    table.addColumn("Modo de la simulacion");
-    table.addColumn("Cantidad de Nodos");
-    table.addColumn("Etiqueta del Nodo");
-    table.addColumn("Estado de Salud");
-    table.addColumn("Tiene Mascarilla");
-    table.addColumn("Dia de infeccion");  
-    for(NodoG g: nodes){
+  public Table makeTablaRegistro(NodoG g){
+    if(this.table != null && g == null){
+      table = new Table();
+      table.addColumn("Modo de la simulacion");
+      table.addColumn("Cantidad de Nodos");
+      table.addColumn("Etiqueta del Nodo");
+      table.addColumn("Estado de Salud (Infectado)");
+      table.addColumn("Tiene Mascarilla");
+      table.addColumn("Dia de infeccion"); 
+    }else{
       TableRow row = table.addRow();
-      System.out.println(g.toString());
       row.setInt("Modo de la simulacion",1);
       row.setInt("Cantidad de Nodos",nodes.size());
       row.setInt("Etiqueta del Nodo",g.etiquetas);
       if(g.isInfected){
-         row.setString("Infectado","Si");
+         row.setString("Estado de Salud (Infectado)","Si");
       }else{
-         row.setString("Infectado","No");
+         row.setString("Estado de Salud (Infectado)","No");
       }
       if(g.hasMascarilla){
         row.setString("Tiene Mascarilla","Si");
       }else{
-        row.setString("Tiene Mascarilla","Noi");
+        row.setString("Tiene Mascarilla","No");
       }
+      row.setString("Dia de infeccion",String.valueOf(g.getContagiadoEn()));
+    }
+    return table;
+   }
+      
+  public void reporteMinisterioDeSalud(int dia){
+    for(NodoG g: nodes){
+      System.out.println(g.toString());
+      table = makeTablaRegistro(g);
     }
     if(healthy.size() != 0){
       System.out.println("---------------------- RUTA MÁS PROBABLE DE INFECCION PARA LOS SANOS --------------------");
-      for(NodoG g : healthy){ //<>//
+      for(NodoG g : healthy){
         Sano s = (Sano) g;
         s.getMayorRiesgoContagio(new DFSImplementation(), infected);
         System.out.println(s.toString());
       }
     }
-    saveTable(table,"dia_"+dia+".html");
-    table = new Table();
+    tablas.add(table);
   }
 
   public boolean isAllInfected(){
@@ -156,5 +167,4 @@ class Graph{
   public LinkedListC<NodoG> getHealthy(){
     return healthy;
   } 
-   
 }

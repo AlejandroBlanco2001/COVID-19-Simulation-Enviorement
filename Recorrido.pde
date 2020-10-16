@@ -16,13 +16,13 @@ public class Recorrido{
     LinkedListC<NodoG> tempo = new LinkedListC();
     for(StackC r : recorridos){
       while(!r.isEmpty()){
-        NodoG last = r.popS(); //<>//
-        NodoG actual = r.peek();  //<>//
-        if(actual == null){  //<>//
+        NodoG last = r.popS();
+        NodoG actual = r.peek(); 
+        if(actual == null){ 
           tempo.add(last);
           break;
         }
-        tempo.add(last); //<>//
+        tempo.add(last);
         prob *= getProbabilidad(last,actual);
       }
       if(prob > min){
@@ -31,7 +31,7 @@ public class Recorrido{
       }
       tempo = new LinkedListC();
     } 
-    return camino; //<>//
+    return camino;
   }
   
   public float getProbabilidad(NodoG in, NodoG noIn){

@@ -116,6 +116,7 @@ public class LinkedListC<T> implements Iterable<T> {
      * @param index Posicion del Nodo a buscar
      * @return Nodo Nodo a buscar, en caso contrario {@code null}
      */
+    
     public T get(int index) {
         int cont = 0;
         Node P = PTR;
@@ -124,17 +125,6 @@ public class LinkedListC<T> implements Iterable<T> {
                 return (T) P.Dato;
             }
             cont++;
-            P = P.Link;
-        }
-        return null;
-    }
-    
-    public T get(Object item){
-        Node P = PTR;
-        while (P != null) {
-            if (P == item) {
-                return (T) P.Dato;
-            }
             P = P.Link;
         }
         return null;
