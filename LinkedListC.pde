@@ -132,7 +132,7 @@ public class LinkedListC<T> implements Iterable<T> {
     
      /**
      * Metodo que se encarga de eliminar de acuerdo a una posicion en la Lista Enlazada Simple, el nodo seleccionado
-     * @param index Posicion del Nodo a buscar
+     * @param index Posicion del Nodo a eliminar
      */
     public void delete(int index){
       Node P = PTR;

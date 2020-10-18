@@ -1,11 +1,17 @@
 class Infectado extends NodoG{
   
+  /**
+  * Constructor del Infectado, usa el constructor del padre
+  */
   public Infectado(NodoG base){
     super(base.etiquetas);
     this.adjacencyNodes = base.adjacencyNodes;
     this.isInfected = true;
   }
   
+  /**
+  * Subrutina que se encarga de verificar si se puede infectar los nodos adyacentes al infectado, en el caso de poder, se infecta 
+  */
   public void infecta(){
     boolean infecto;
     for(NodoG vecino: adjacencyNodes){
@@ -36,6 +42,11 @@ class Infectado extends NodoG{
     }
   }
   
+  /**
+  * Metodo que se encarga de calcular la probabilidad de que un Nodo sea infectado
+  * @param prob Rango de probabilidad para la infeccion
+  * @return prob Devuelve {@code true} si el nodo resultara infectado, de lo contrario, devolvera {@code false}
+  */
   public boolean Verificador(int prob){
     int randomN = (int) random(1,11);
     switch(prob){

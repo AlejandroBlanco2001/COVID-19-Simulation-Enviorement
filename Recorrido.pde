@@ -1,6 +1,9 @@
 public class Recorrido{
   private LinkedListC<StackC> recorridos;
-    
+      
+  /**
+  * Constructor de la clase
+  */
   public Recorrido(){
     recorridos = new LinkedListC();
   }
@@ -9,6 +12,9 @@ public class Recorrido{
     recorridos.add(pilaRecorrido);
   }
 
+  /**
+  * Subrutina que se encarga de agregar los recorridos en forma de {@link StackC}
+  */
   public LinkedListC<NodoG> getCaminoContaigoAlto(){
     float min = 0;
     float prob = 1;
@@ -34,6 +40,12 @@ public class Recorrido{
     return camino;
   }
   
+  /**
+  * Metodo que se encarga de calcular las posibiliades de que un Nodo Sano se infecte debido a uno Infectado
+  * @param in Nodo infectado
+  * @param noIn Nodo no Infectado
+  * @return prob Devuelve la probabilidad de que una infeccion suceda.
+  */
   public float getProbabilidad(NodoG in, NodoG noIn){
     if(in.isHasMascarilla()){
       if(noIn.isHasMascarilla() && noIn.checkDistance(in)){

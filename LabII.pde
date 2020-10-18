@@ -7,14 +7,19 @@ private int mode = 2;
 private boolean started = true;
 private boolean createdResume = false;
 private int population = 5;
+private Graphics graphics;
 int contador = 0;
 double inicio; 
 ControlP5 cp5;
 
 void setup(){
    size(1080,720);
+   cp5  = new ControlP5(this);
    setGUI();
    surface.setTitle("COVID-19 Simulation");
+   PFont p = createFont("Verdana",10); 
+   ControlFont font = new ControlFont(p);
+   cp5.setFont(font);
 }
 
 void draw(){
@@ -25,7 +30,7 @@ void draw(){
           step = false;
         }
       }else{
-        println("SE ACABO LA SIMULACION con " + contador + " iteraciones, todos se murieron");
+        println("SE ACABO LA SIMULACION con " + contador + " iteraciones");
         startA = false;
         started = true;
         createdResume = true;
@@ -41,7 +46,6 @@ public void setGUI(){
    rect(920,130,260,210);
    fill(0,0,0, 30);
    rect(920,360,260,190);
-   cp5  = new ControlP5(this);
    textSize(16);
    fill(0,0,0);
    text("Cantidad de personas",835,170);
@@ -70,7 +74,7 @@ public void setGUI(){
 public void buildIndex(){
   HTMLBuilder htmlB = new HTMLBuilder();
   htmlB.createTableHtml(graph.tablas);
-  htmlB.seperateTagsTable(); //<>//
+  htmlB.seperateTagsTable(); 
 }
 
 private void reload(int modo,int poblacion){
@@ -90,6 +94,8 @@ private void reload(int modo,int poblacion){
    graph.setMode(modo);
    graph.update();
    inicio = System.currentTimeMillis();
+   graphics = new Graphics(graph);
+   graphics.drawGraph();
 }
 
 private void simulate(){
@@ -97,6 +103,7 @@ private void simulate(){
   contador += 1;
   avanzaGeneracion();
   graph.update(contador);
+  graphics.updateGraph(graph);
   println("REPORTE DEL MINISTERIO DE SALUD - DIA " + contador);
   println("SALUDABLES " + graph.getHealthy().size());
   graph.reporteMinisterioDeSalud(contador);
@@ -143,6 +150,8 @@ public void Genera_Nuevo_Grafo(){
   println("REINICIA");
   startA = false;
   started = true;
+  clear();
+  setGUI();
 }
 
 public void Siguiente_Dia(){
@@ -185,4 +194,8 @@ private Graph crearRanGrafo(Graph grafo){
   }
   graph.convertList(Shuffle.getOrdered((nodos)));
   return graph;
+}
+
+public void mousePressed(){
+  println(mouseX + " | " + mouseY);
 }
