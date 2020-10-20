@@ -25,7 +25,7 @@ void setup(){
 void draw(){
     if(startA){
       if(!graph.isAllInfected()){
-        if(System.currentTimeMillis() - inicio > 60000 || step){
+        if(System.currentTimeMillis() - inicio > 60 || step){
           simulate();
           step = false;
         }
@@ -34,6 +34,7 @@ void draw(){
         startA = false;
         started = true;
         createdResume = true;
+        graph = null;
      }    
     }
   }
@@ -41,6 +42,9 @@ void draw(){
 public void setGUI(){
    noStroke();
    background(255,255,255);
+   rectMode(CORNER);
+   fill(0,0,0, 30);
+   rect(30,30,730,600);
    rectMode(CENTER);
    fill(0,0,0, 30);
    rect(920,130,260,210);
@@ -51,7 +55,7 @@ public void setGUI(){
    text("Cantidad de personas",835,170);
    text("Uso de la mascarilla",840,70);
    text("FASE VISUAL EN PRUEBA, RESULTADOS EN CONSOLA",350,700);
-   cp5.addSlider("peopleValues").setPosition(820,180).setSize(200,30).setValue(2).setRange(2,100).setNumberOfTickMarks(100).setSliderMode(Slider.FLEXIBLE);
+   cp5.addSlider("peopleValues").setPosition(820,180).setSize(200,30).setValue(population).setRange(2,100).setNumberOfTickMarks(100).setSliderMode(Slider.FLEXIBLE);
    cp5.getController("peopleValues").setCaptionLabel("");
    cp5.addButton("inicia").setPosition(820,290).setSize(200,30);
    cp5.getController("inicia");
@@ -67,7 +71,7 @@ public void setGUI(){
    cp5.addButton("Sin_Mascarilla").setPosition(880,90).setSize(75,30);
    cp5.getController("Sin_Mascarilla").setCaptionLabel("Nadie");   
    cp5.addButton("Aleatorio").setPosition(960,90).setSize(75,30);
-   cp5.getController("Aleatorio").setCaptionLabel("Uso aleatorio");   
+   cp5.getController("Aleatorio").setCaptionLabel("Uso aleatorio");  
 }
 
 
@@ -125,10 +129,11 @@ public void Mascarilla(){
 public void inicia(){
   println("ARRANCA");
   if(started){
-    reload(mode,population);
+    if (graph!=null) {
     startA = true;  
     started = false;
     createdResume = false;
+    }
   }
 }
 
@@ -151,7 +156,18 @@ public void Genera_Nuevo_Grafo(){
   startA = false;
   started = true;
   clear();
+  int pop = population;
+  cp5.getController("peopleValues").remove();
+  cp5.getController("inicia").remove();
+  cp5.getController("Genera_Nuevo_Grafo").remove();
+  cp5.getController("Ver_Resumen").remove();
+  cp5.getController("Siguiente_Dia").remove();
+  cp5.getController("Mascarilla").remove();   
+  cp5.getController("Sin_Mascarilla").remove();   
+  cp5.getController("Aleatorio").remove();  
+  population = pop;
   setGUI();
+  reload(mode, pop);
 }
 
 public void Siguiente_Dia(){
