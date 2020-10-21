@@ -5,6 +5,9 @@ class Graph{
   public LinkedListC<Table> tablas;
   private Table table;
   
+  /**
+  * Constructor de la clase
+  */
   public Graph(){
     nodes = new LinkedListC();
     infected = new LinkedListC();
@@ -13,11 +16,19 @@ class Graph{
     table = new Table();  
   }
   
+  /**
+  * Metodo que se encarga de devolver un nodo aleatorio del grafo
+  * @return node Nodo aleatorio
+  */
   public NodoG getRandomNode(){
     NodoG node = nodes.get((int) random(0,nodes.size()));
     return node;
   }
   
+  /**
+  * Subrutina que se encarga de crear una cantidad N de nodos del grafo
+  * @param number Cantidad de nodos a crear
+  */
   public void createNode(int number){
     NodoG node;
     for(int i = 0; i < number; i++){
@@ -26,6 +37,10 @@ class Graph{
     }
   }
   
+  /**
+  * Subrutina que se encarga de seleccionar si el Nodo debe llevar o no mascarilla
+  * @param mode Decision del usuario con respecto al porte de mascarillas, 0 todos deben llevar, 1 ninguno debe llevar y 2 aleatorio
+  */
   public void setMode(int mode){
     for(NodoG g: nodes){
       if(mode == 0){
@@ -42,6 +57,10 @@ class Graph{
     }
   }
   
+  /**
+  * Metodo que se encarga de convertir una Lista Enlazada Simple a una array con el mismo tamaño
+  * @return nodos Array que contiene los nodos de la lista
+  */
   public NodoG[] convertArray(){
     NodoG[] nodos = new NodoG[nodes.size()];
     int i = 0;
@@ -52,6 +71,10 @@ class Graph{
     return nodos;
   }
   
+  /**
+  * Subrutina que se encarga de convertir en una Lista Enlazada Simple dada una Array.
+  * @param array Array a convertir en Lista Enlazada Simple
+  */
   public void convertList(NodoG[] array){
     LinkedListC<NodoG> n = new LinkedListC();
     for(int i = 0; i < array.length; i++){
@@ -60,6 +83,9 @@ class Graph{
     this.nodes = n;
   }
   
+  /**
+  * Subrutina que se encarga de actualizar los datos del grafo en el dia 0
+  */
   public void update(){
     int cont = 0;
     int randomPacienteCero = (int) random(0,nodes.size());
@@ -75,6 +101,10 @@ class Graph{
     }
   }
   
+  /**
+  * Subrutina que se encarga de actualizar los datos del grafo a partir del dia 1 en adelante
+  * @param iteracion Dia de la actualizacion del grafo
+  */
   public void update(int iteracion){
     int cont = 0;
     for(NodoG g: nodes){
@@ -90,7 +120,13 @@ class Graph{
     System.out.println("INFECTADOS POR DIA " + cont);
     makeTablaRegistro(null,0);
   }
-  
+ 
+ /*
+ * Metodo que se encarga de verificar si un elemento se encuentra en una lista
+ * @param lista Lista Enlazada Simple a inspeccionar
+ * @param n Nodo a verificar si existe contenido en la lista
+ * @return {@code true} si el nodo esta contenido en la Lista, de lo contrario, devuelve {@code false}
+ */
  public boolean contains(LinkedListC<NodoG> lista, NodoG n){
     for(NodoG g: lista){
       if(g.etiquetas == n.etiquetas){
@@ -111,10 +147,20 @@ class Graph{
     }
   }
  
+  /*
+  * Metodo que devuelve la lista de nodos del grafo
+  * @return nodes Nodos del grafo
+  */
   public LinkedListC<NodoG> getNodes(){
     return nodes;
   } 
   
+  /*
+  * Metodo que se encarga de añadir en cada fila los nodos de esa iteracion
+  * @param g Nodo a añadir a la tabla
+  * @param dia Dia en el cual se creo
+  * @return table Tabla del dia respectivo
+  */
   public Table makeTablaRegistro(NodoG g, int dia){
     if(this.table != null && g == null){
       table = new Table();
@@ -146,6 +192,10 @@ class Graph{
     return table;
    }
       
+  /**
+  * Subrutina que se encarga de mostrar en pantalla los nodos infectados, sanos y la ruta de mayor contagio para cada nodo sano
+  * @param dia Iteraccion en la que se encuentra la simulacion
+  */
   public void reporteMinisterioDeSalud(int dia){
     for(NodoG g: nodes){
       System.out.println(g.toString());
@@ -162,10 +212,18 @@ class Graph{
     tablas.add(table);
   }
 
+  /**
+  * Metodo que se encarga de retornar el tamaño de la lista de personas saludables 
+  * @return {@code true} si todos los nodos estan infectados, de lo contrario, {@code false} si no lo estan
+  */
   public boolean isAllInfected(){
     return this.healthy.size() == 0;
   }
   
+  /**
+  * Metodo que se encarga de devovler la lista de las personas saludables
+  * @return healthy Lista Enlazada Simple de las personas saludables
+  */
   public LinkedListC<NodoG> getHealthy(){
     return healthy;
   } 

@@ -1,14 +1,24 @@
 class Sano extends NodoG{
   private LinkedListC<NodoG> dangerousPath;
+  private NodoG padre;
     
   /**
   * Constructor de la clase, usa el constructor de su padre {@link Node}
   */
   public Sano(NodoG base){
     super(base.etiquetas);
+    padre = base;
     this.adjacencyNodes = base.adjacencyNodes;
+    this.xCoord = base.getxCoord();
+    this.yCoord = base.getyCoord();
+    this.radio = base.getRadio();
   }
   
+  public void update(){
+    this.xCoord = padre.getxCoord();
+    this.yCoord = padre.getyCoord();
+    this.radio = padre.getRadio();
+  }
   /**
   * Subrutina que se encarga de obtener el camino de más riesgo de contagio del Nodo Sano
   */
@@ -38,4 +48,10 @@ class Sano extends NodoG{
     }
     return sb.toString();
   }
+  
+  public void showInfo(){
+    fill(255);
+    rect(xCoord, yCoord - 30, 200,200); 
+  }
+  
 }
