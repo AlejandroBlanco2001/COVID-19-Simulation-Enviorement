@@ -1,4 +1,4 @@
-public class DFSImplementation { //<>// //<>//
+public class DFSImplementation { //<>// //<>// //<>//
   private Recorrido recorrido;
 
   /*
@@ -95,5 +95,5 @@ public class DFSImplementation { //<>// //<>//
    */
   public Recorrido getRecorrido() {
     return recorrido;
-  } //<>// //<>// //<>// //<>//
+  } //<>// //<>// //<>// //<>// //<>//
 }

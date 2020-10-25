@@ -28,7 +28,7 @@ void setup() {
 
 void draw() {
   if (startA) {
-    if (!graph.isAllInfected()) {
+    if (!graph.isAllInfected()) { //<>//
       if (automatic) {
         if (System.currentTimeMillis() - inicio > 5000) {
           simulate();
@@ -46,7 +46,6 @@ void draw() {
       startA = false;
       started = true;
       createdResume = true;
-      graph = null;
     }
   }
 }
@@ -71,8 +70,7 @@ public void setGUI() {
   cp5.addSlider("peopleValues").setPosition(820, 180).setSize(200, 30).setValue(population).setRange(2, 100).setNumberOfTickMarks(100).setSliderMode(Slider.FLEXIBLE);
   cp5.getController("peopleValues").setCaptionLabel("");
   cp5.addButton("inicia").setPosition(820, 290).setSize(200, 30);
-  checkBox = cp5.addCheckBox("automatic").setPosition(820, 260).setSize(10, 10).addItem("Salto automatico", 0).addItem("Salto Manual", 1);
-  cp5.getController("inicia");
+  checkBox = cp5.addCheckBox("seleccion").setPosition(820, 260).setSize(10, 10).addItem("Salto automatico", 0).addItem("Salto Manual", 1);
   cp5.getController("inicia").setCaptionLabel("Inicia la simulacion");
   cp5.addButton("Genera_Nuevo_Grafo").setPosition(820, 330).setSize(200, 30);
   cp5.getController("Genera_Nuevo_Grafo").setCaptionLabel("Genera un nuevo grafo aleatorio");
@@ -89,10 +87,10 @@ public void setGUI() {
 }
 
 
-public void buildIndex() {
+public void buildIndex(Graph graph) {
   HTMLBuilder htmlB = new HTMLBuilder();
-  htmlB.createTableHtml(graph.tablas);
-  htmlB.seperateTagsTable();
+  htmlB.createTableHtml(graph.tablas); //<>//
+  htmlB.seperateTagsTable(); //<>//
 }
 
 private void reload(int modo, int poblacion) {
@@ -144,11 +142,10 @@ public void Mascarilla() {
 public void inicia() {
   println("ARRANCA");
   if (started) {
-    if (graph!=null) {
+    if (startA == false) {
       startA = true;  
       started = false;
       createdResume = false;
-      checkModeSimulation();
     }
   }
 }
@@ -169,9 +166,9 @@ public void peopleValues(int persona) {
 
 public void Ver_Resumen() {
   if (createdResume) {
-    String path = dataPath("");
-    //buildIndex();
-    println("Dirigite a " + path + "\\temp\\index.html, no borre la carpeta temp");
+    String path = dataPath(""); //<>//
+    buildIndex(this.graph); //<>//
+    println("Dirigite a " + path + "\\temp\\index.html, no borre la carpeta temp"); //<>//
   } else {
     println("ARCHIVO NO GENERADO AUN");
   }
@@ -183,6 +180,7 @@ public void Genera_Nuevo_Grafo() {
   started = true;
   clear();
   int pop = population;
+  checkModeSimulation();
   removeCP5(); 
   population = pop;
   setGUI();
