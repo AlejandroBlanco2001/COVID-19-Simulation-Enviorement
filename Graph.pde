@@ -226,5 +226,19 @@ class Graph {
    */
   public LinkedListC<NodoG> getHealthy() {
     return healthy;
+  } 
+  
+  /**
+   * Metodo que se encarga de buscar y devovler un nodo segun su etiqueta
+   * @param etiqueta Etiqueta del nodo a buscar
+   * @return nodo Si el nodo ha sido encontrado
+   */
+  public NodoG getNode(int etiqueta) {
+    for (NodoG nodo : nodes) {
+      if (nodo.etiquetas == etiqueta) {
+        return nodo;
+      }
+    }
+    return null;
   }
 }

@@ -9,6 +9,7 @@ private boolean createdResume = false;
 private int population = 5;
 private boolean automatic = true;
 private Graphics graphics;
+private boolean infoToggled = false;
 int contador = 0;
 double inicio; 
 CheckBox checkBox;
@@ -169,7 +170,7 @@ public void peopleValues(int persona) {
 public void Ver_Resumen() {
   if (createdResume) {
     String path = dataPath("");
-    buildIndex();
+    //buildIndex();
     println("Dirigite a " + path + "\\temp\\index.html, no borre la carpeta temp");
   } else {
     println("ARCHIVO NO GENERADO AUN");
@@ -182,17 +183,20 @@ public void Genera_Nuevo_Grafo() {
   started = true;
   clear();
   int pop = population;
-  cp5.getController("peopleValues").remove();
+  removeCP5(); 
+  population = pop;
+  setGUI();
+  reload(mode, pop);
+}
+
+public void removeCP5() {
   cp5.getController("inicia").remove();
   cp5.getController("Genera_Nuevo_Grafo").remove();
   cp5.getController("Ver_Resumen").remove();
   cp5.getController("Siguiente_Dia").remove();
   cp5.getController("Mascarilla").remove();   
   cp5.getController("Sin_Mascarilla").remove();   
-  cp5.getController("Aleatorio").remove();  
-  population = pop;
-  setGUI();
-  reload(mode, pop);
+  cp5.getController("Aleatorio").remove();
 }
 
 public void Siguiente_Dia() {
