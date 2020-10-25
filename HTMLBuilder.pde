@@ -1,4 +1,4 @@
-import java.io.BufferedReader;
+/* import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException; 
 import java.util.regex.Matcher;
@@ -14,7 +14,7 @@ public class HTMLBuilder{
   /** 
   * Constructor de la clase
   */
-  public HTMLBuilder(){
+  /*public HTMLBuilder(){
     tablasString = new LinkedListC();
   }
   
@@ -22,7 +22,7 @@ public class HTMLBuilder{
   * Subrutina que se encarga de crear en el directorio del proyecto las tablas de infeccion de cada iteracion.
   * @param tables Lista enlazada simple que contiene todas las tablas a generar
   */
-  public void createTableHtml(LinkedListC<Table> tables){
+  /*public void createTableHtml(LinkedListC<Table> tables){
     int cont = 0;
     for(Table t : tables){
       saveTable(t,"data/temp/day"+cont+".html","html");
@@ -35,7 +35,7 @@ public class HTMLBuilder{
   /**
   * Subrutina que se encarga de extraer las tablas en formato HTML, es decir, las etiquetas <table> y su contenido
   */
-  public void seperateTagsTable(){
+ /* public void seperateTagsTable(){
     String html;
     int begin = 0, end = 0;
     // MEJOR MANERA -> CAUSA BUG String pat = "<table>(.|\\n)*</table>";
@@ -63,7 +63,7 @@ public class HTMLBuilder{
   * @param filename Ruta del archivo HTML 
   * @return sb Cadena de la conversion del archivo HTML  
   */
-  public String makeFileAString(String filename){
+  /*public String makeFileAString(String filename){
     filename = path + filename;
     StringBuffer sb = new StringBuffer();
         try {
@@ -85,7 +85,7 @@ public class HTMLBuilder{
   * @param tablas Lista enlazada simple que contiene las tablas en formato HMTL
   * @param imgRoute Cadena que contiene las rutas de las imagenes a anexar en el documento HTML
   */ //<>// //<>//
-  public void createHTML(LinkedListC<String> tablas, String imgRoute){
+  /*public void createHTML(LinkedListC<String> tablas, String imgRoute){
      htmlFinalFile = createWriter("data/index.html");
      String css = "<link rel=\"stylesheet\" href=\"style.css\">";
      String title = "<title> Simulation Data Summary </title>";
@@ -105,3 +105,4 @@ public class HTMLBuilder{
      htmlFinalFile.close();
    }
 }
+*/
