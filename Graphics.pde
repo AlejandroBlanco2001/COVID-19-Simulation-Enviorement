@@ -55,7 +55,7 @@ public class Graphics {
     }
     return false;
   }
-  
+
   public void updateGraph(Graph graph) { 
     drawEdges();
     for (NodoG nodo : graph.nodes) {
@@ -63,6 +63,12 @@ public class Graphics {
         fill(1, 169, 180);
       } else {
         fill(255);
+      }
+      strokeWeight(2);
+      if (nodo.isHasMascarilla()) {
+        stroke(66, 245, 96);
+      } else {
+        stroke(230, 245, 66);
       }
       ellipse(puntos[nodo.etiquetas].x, puntos[nodo.etiquetas].y, diam, diam);
       fill(50);
@@ -86,8 +92,14 @@ public class Graphics {
       } else {
         fill(255);
       }
-      stroke(0);
+      strokeWeight(5);
+      if (nodo.isHasMascarilla()) {
+        stroke(66, 245, 96);
+      } else {
+        stroke(245, 75, 66);
+      }
       ellipse(puntos[n].x, puntos[n].y, diam, diam);
+      strokeWeight(0);
       stroke(0);
       fill(0);
       textSize(diam/3);
@@ -105,6 +117,7 @@ public class Graphics {
     }
     return v;
   }
+
   private int nodeLineIntersection(float x1, float y1, float pendiente, int nodoI, int nodoF) {
     boolean nodo1 = false, nodo2 = false;
     for (float i = 30; i < 740; i++) {
@@ -129,7 +142,6 @@ public class Graphics {
   }
 
   public boolean isInNodo(float x, float y, int nodoEtiqueta) {
-
     float deltaX = (puntos[nodoEtiqueta].x - x) * (puntos[nodoEtiqueta].x - x);
     float deltaY = (puntos[nodoEtiqueta].y - y) * (puntos[nodoEtiqueta].y - y);
     float raiz = deltaX + deltaY;
@@ -166,9 +178,15 @@ public class Graphics {
       Sano s = new Sano(nodo);
       s.getMayorRiesgoContagio(new DFSImplementation(), graph.infected);
       for (NodoG rec : s.dangerousPath) {
-        fill(255, 224, 93);
+        if (rec.isIsInfected()) {
+          fill(175, 45, 45);
+        } else {
+          fill(204, 237, 237);
+        }
         ellipse(puntos[rec.etiquetas].x, puntos[rec.etiquetas].y, diam, diam);
         fill(0);
+        textSize(diam/3);
+        text(rec.etiquetas, puntos[rec.etiquetas].x-(diam/6), puntos[rec.etiquetas].y-(diam/6));
         textSize(45);
         text("Nodo #"+nodo.etiquetas, 30, 690);
       }

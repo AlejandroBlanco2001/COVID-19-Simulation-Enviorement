@@ -29,7 +29,7 @@ public class Recorrido {
           break;
         }
         tempo.add(last);
-        prob *= getProbabilidad(last, actual);
+        prob *= getProbabilidad(actual,last);
       }
       if (prob > min) {
         min = prob;

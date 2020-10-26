@@ -1,4 +1,4 @@
-import java.io.BufferedReader; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
+import java.io.BufferedReader;  //<>// //<>//
 import java.io.FileReader;
 import java.io.IOException; 
 import java.util.regex.Matcher;
@@ -23,13 +23,13 @@ public class HTMLBuilder {
    * @param tables Lista enlazada simple que contiene todas las tablas a generar
    */
   public void createTableHtml(LinkedListC<Table> tables) {
-    int cont = 0; //<>// //<>//
-    for (Table t : tables) { //<>// //<>//
-      saveTable(t, "data/temp/day"+cont+".html", "html"); //<>// //<>//
-      cont++; //<>// //<>//
+    int cont = 0; //<>// //<>// //<>//
+    for (Table t : tables) { //<>// //<>// //<>//
+      saveTable(t, "data/temp/day"+cont+".html", "html"); //<>// //<>// //<>//
+      cont++; //<>// //<>// //<>//
     }
-    path = dataPath(""); //<>// //<>//
-    contadorDias = cont-1; //<>// //<>//
+    path = dataPath(""); //<>// //<>// //<>//
+    contadorDias = cont-1; //<>// //<>// //<>//
   }
 
   /**
@@ -96,7 +96,7 @@ public class HTMLBuilder {
     String ruta = path + imgRoute; 
     for (String table : tablas) {
       String p = ruta + "Day"+ cont+".png";
-      htmlFinalFile.println("<img src="+p+">"); //<>//
+      htmlFinalFile.println("<img src="+p+">"); //<>// //<>//
       htmlFinalFile.println("<br>");
       htmlFinalFile.println(table);
       htmlFinalFile.println("<hr>");

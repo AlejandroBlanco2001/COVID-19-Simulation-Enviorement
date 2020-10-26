@@ -24,7 +24,7 @@ class Sano extends NodoG {
    */
   public void getMayorRiesgoContagio(DFSImplementation dfs, LinkedListC<NodoG> infected) {
     for (NodoG nodo : infected) {
-      dfs.dfs(this, nodo, new LinkedListC(), new LinkedListC(), this);
+      dfs.dfs(nodo, this, new LinkedListC(), new LinkedListC(), nodo);
     }
     dangerousPath = dfs.getRecorrido().getCaminoContaigoAlto();
   }
@@ -43,8 +43,8 @@ class Sano extends NodoG {
    */
   public String stringfy(LinkedListC<NodoG> lista) {
     StringBuffer sb = new StringBuffer();
-    for (NodoG n : lista) {
-      sb.append(n.etiquetas).append(",");
+    for (NodoG n : lista) { //<>// //<>//
+      sb.append(n.etiquetas).append(","); //<>// //<>//
     }
     return sb.toString();
   }

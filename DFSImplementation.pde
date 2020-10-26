@@ -1,4 +1,4 @@
-public class DFSImplementation { //<>// //<>// //<>//
+public class DFSImplementation { //<>// //<>// //<>// //<>//
   private Recorrido recorrido;
 
   /*
@@ -19,23 +19,21 @@ public class DFSImplementation { //<>// //<>// //<>//
   public void dfs(NodoG n, NodoG f, LinkedListC<NodoG> visitados, LinkedListC<NodoG> camino, NodoG inicio) {
     visitados.add(n);
     if (n.etiquetas == f.etiquetas) {
-      StackC stack = new StackC();
-      stack.pushS(inicio);
-      for (int i = 0; i < camino.size(); i++) {
-        stack.pushS(camino.get(i));
-        if (camino.get(i).isInfected) {
-          recorrido.addP(stack);
-          stack = new StackC();
-          stack.pushS(inicio);
-        }
-      }
+      StackC stack = new StackC(); //<>// //<>//
+      stack.pushS(inicio); //<>// //<>//
+      for (int i = 0; i < camino.size(); i++) { //<>// //<>//
+        stack.pushS(camino.get(i)); //<>// //<>//
+      } //<>// //<>//
+      recorrido.addP(stack); //<>// //<>//
+      stack = new StackC(); //<>// //<>//
+      stack.pushS(inicio); //<>// //<>//
     } else {
       LinkedListC<NodoG> vecinos = n.adjacencyNodes;
       for (int i = 0; i < vecinos.size(); i++) {
-        NodoG y = vecinos.get(i);
-        if (!contains(visitados, y.etiquetas) && !(y.isInfected && y.etiquetas != f.etiquetas)) { 
-          visitados.add(y);
-          camino.add(y);
+        NodoG y = vecinos.get(i); //<>// //<>//
+        if (!contains(visitados, y.etiquetas) && !(y.isInfected)) {  //<>// //<>//
+          visitados.add(y); //<>// //<>//
+          camino.add(y); //<>// //<>//
           dfs(y, f, visitados, camino, inicio);
           camino.delete(camino.size()-1);
         }
@@ -95,5 +93,5 @@ public class DFSImplementation { //<>// //<>// //<>//
    */
   public Recorrido getRecorrido() {
     return recorrido;
-  } //<>// //<>// //<>// //<>// //<>//
+  } //<>// //<>// //<>// //<>// //<>// //<>//
 }

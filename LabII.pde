@@ -1,4 +1,4 @@
-import controlP5.*;
+import controlP5.*; //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
 
 private Graph graph;
 private boolean startA = false;
@@ -11,6 +11,7 @@ private boolean automatic = true;
 private Graphics graphics;
 private boolean infoToggled = false;
 int contador = 0;
+double time;
 double inicio; 
 CheckBox checkBox;
 Text t;
@@ -28,7 +29,7 @@ void setup() {
 
 void draw() {
   if (startA) {
-    if (!graph.isAllInfected()) { //<>//
+    if (!graph.isAllInfected()) {
       if (automatic) {
         if (System.currentTimeMillis() - inicio > 5000) {
           simulate();
@@ -46,6 +47,15 @@ void draw() {
       startA = false;
       started = true;
       createdResume = true;
+    }
+  }
+  if (infoToggled) {
+    if (System.currentTimeMillis() - time > 2000) {
+      removeCP5();
+      setGUI();
+      graphics.updateGraph(graph);
+      infoToggled = !infoToggled;
+      delay(5000);
     }
   }
 }
@@ -89,8 +99,8 @@ public void setGUI() {
 
 public void buildIndex(Graph graph) {
   HTMLBuilder htmlB = new HTMLBuilder();
-  htmlB.createTableHtml(graph.tablas); //<>//
-  htmlB.seperateTagsTable(); //<>//
+  htmlB.createTableHtml(graph.tablas);
+  htmlB.seperateTagsTable();
 }
 
 private void reload(int modo, int poblacion) {
@@ -166,9 +176,9 @@ public void peopleValues(int persona) {
 
 public void Ver_Resumen() {
   if (createdResume) {
-    String path = dataPath(""); //<>//
-    buildIndex(this.graph); //<>//
-    println("Dirigite a " + path + "\\temp\\index.html, no borre la carpeta temp"); //<>//
+    String path = dataPath("");
+    buildIndex(this.graph);
+    println("Dirigite a " + path + "\\temp\\index.html, no borre la carpeta temp");
   } else {
     println("ARCHIVO NO GENERADO AUN");
   }
@@ -237,6 +247,17 @@ private Graph crearRanGrafo(Graph grafo) {
   }
   graph.convertList(Shuffle.getOrdered((nodos)));
   return graph;
+}
+
+public void mousePressed() {
+  if (startA) {
+    time = System.currentTimeMillis();
+    if (infoToggled == false) {
+      if (graphics.showNodo() != -1) {
+        infoToggled = true;
+      }
+    }
+  }
 }
 
 public class Text {
