@@ -26,6 +26,7 @@ public class Graphics {
           stroke(199, 44, 65);
           line(puntos[nodo.etiquetas].x, puntos[nodo.etiquetas].y, puntos[adj.etiquetas].x, puntos[adj.etiquetas].y);
         } else {
+          stroke(0);
           line(puntos[nodo.etiquetas].x, puntos[nodo.etiquetas].y, (puntos[adj.etiquetas].x+puntos[nodo.etiquetas].x)/2, (puntos[adj.etiquetas].y+puntos[nodo.etiquetas].y)/2);
           stroke(199, 44, 65);
           line((puntos[adj.etiquetas].x+puntos[nodo.etiquetas].x)/2, (puntos[adj.etiquetas].y+puntos[nodo.etiquetas].y)/2, puntos[adj.etiquetas].x, puntos[adj.etiquetas].y);
@@ -56,6 +57,8 @@ public class Graphics {
     return false;
   }
 
+
+
   public void updateGraph(Graph graph) { 
     drawEdges();
     for (NodoG nodo : graph.nodes) {
@@ -64,7 +67,7 @@ public class Graphics {
       } else {
         fill(255);
       }
-      strokeWeight(2);
+      strokeWeight(3);
       if (nodo.isHasMascarilla()) {
         stroke(66, 245, 96);
       } else {
@@ -92,7 +95,7 @@ public class Graphics {
       } else {
         fill(255);
       }
-      strokeWeight(5);
+      strokeWeight(3);
       if (nodo.isHasMascarilla()) {
         stroke(66, 245, 96);
       } else {
@@ -165,19 +168,24 @@ public class Graphics {
   }
 
   private void showInfo(int i) {
+    NodoG nodoAnt = null;
     NodoG nodo = graph.getNode(i);
     if (nodo.isIsInfected()) {
       fill(0);
       textSize(45);
       text("Nodo #"+nodo.etiquetas+" infectado en el día: "+nodo.getContagiadoEn(), 30, 690);
       for (NodoG adj : nodo.getAdjacencyNodes()) {
-        fill(175, 45, 45);
-        ellipse(puntos[adj.etiquetas].x, puntos[adj.etiquetas].y, diam, diam);
+        if (!adj.isIsInfected()) {
+          fill(175, 45, 45);
+          ellipse(puntos[adj.etiquetas].x, puntos[adj.etiquetas].y, diam, diam);
+        }
       }
     } else {
+
       Sano s = new Sano(nodo);
       s.getMayorRiesgoContagio(new DFSImplementation(), graph.infected);
       for (NodoG rec : s.dangerousPath) {
+        NodoG nodoAct = rec;
         if (rec.isIsInfected()) {
           fill(175, 45, 45);
         } else {
@@ -185,12 +193,26 @@ public class Graphics {
         }
         ellipse(puntos[rec.etiquetas].x, puntos[rec.etiquetas].y, diam, diam);
         fill(0);
-        textSize(diam/3);
-        text(rec.etiquetas, puntos[rec.etiquetas].x-(diam/6), puntos[rec.etiquetas].y-(diam/6));
-        textSize(45);
-        text("Nodo #"+nodo.etiquetas, 30, 690);
+
+        strokeWeight(2);
+        if (nodoAnt != null) {
+          if (isBidireccional(nodoAnt, nodoAct)) {           
+            stroke(255, 0, 239);
+            line(puntos[nodoAct.etiquetas].x, puntos[nodoAct.etiquetas].y, puntos[nodoAnt.etiquetas].x, puntos[nodoAnt.etiquetas].y);
+          } else {
+            stroke(0);
+            line(puntos[nodoAct.etiquetas].x, puntos[nodoAct.etiquetas].y, (puntos[nodoAnt.etiquetas].x+puntos[nodoAct.etiquetas].x)/2, (puntos[nodoAnt.etiquetas].y+puntos[nodoAct.etiquetas].y)/2);
+            stroke(255, 0, 239);
+            line((puntos[nodoAnt.etiquetas].x+puntos[nodoAct.etiquetas].x)/2, (puntos[nodoAnt.etiquetas].y+puntos[nodoAct.etiquetas].y)/2, puntos[nodoAnt.etiquetas].x, puntos[nodoAnt.etiquetas].y);
+          }
+          textSize(diam/3);
+          text(rec.etiquetas, puntos[rec.etiquetas].x-(diam/6), puntos[rec.etiquetas].y-(diam/6));
+          textSize(45);
+          text("Nodo #"+nodo.etiquetas, 30, 690);
+          fill(0);
+        }
+        nodoAnt = rec;
       }
-      fill(0);
     }
   }
   private class Point {
