@@ -23,13 +23,13 @@ public class HTMLBuilder {
    * @param tables Lista enlazada simple que contiene todas las tablas a generar
    */
   public void createTableHtml(LinkedListC<Table> tables) {
-    int cont = 0; //<>// //<>// //<>//
-    for (Table t : tables) { //<>// //<>// //<>//
-      saveTable(t, "data/temp/day"+cont+".html", "html"); //<>// //<>// //<>//
-      cont++; //<>// //<>// //<>//
+    int cont = 0; //<>//
+    for (Table t : tables) { //<>//
+      saveTable(t, "data/temp/day"+cont+".html", "html"); //<>//
+      cont++;  //<>//
     }
-    path = dataPath(""); //<>// //<>// //<>//
-    contadorDias = cont-1; //<>// //<>// //<>//
+    path = dataPath("");  //<>//
+    contadorDias = cont-1;  //<>//
   }
 
   /**

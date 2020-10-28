@@ -1,4 +1,4 @@
-public class Recorrido {
+public class Recorrido { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   private LinkedListC<StackC> recorridos;
 
   /**
@@ -17,10 +17,11 @@ public class Recorrido {
    */
   public LinkedListC<NodoG> getCaminoContaigoAlto() {
     float min = 0;
-    float prob = 1;
+    float prob;
     LinkedListC<NodoG> camino = new LinkedListC();
     LinkedListC<NodoG> tempo = new LinkedListC();
     for (StackC r : recorridos) {
+      prob = 1;
       while (!r.isEmpty()) {
         NodoG last = r.popS();
         NodoG actual = r.peek(); 
@@ -29,7 +30,8 @@ public class Recorrido {
           break;
         }
         tempo.add(last);
-        prob *= getProbabilidad(actual,last);
+        println("DE " + last.etiquetas + " a " + actual.etiquetas + " " + getProbabilidad(actual, last));
+        prob *= getProbabilidad(actual, last);
       }
       if (prob > min) {
         min = prob;
@@ -48,24 +50,32 @@ public class Recorrido {
    */
   public float getProbabilidad(NodoG in, NodoG noIn) {
     if (in.isHasMascarilla()) {
-      if (noIn.isHasMascarilla() && noIn.checkDistance(in)) {
-        return 0.20;
-      } else if (noIn.isHasMascarilla() && !noIn.checkDistance(in)) {
-        return 0.30;
-      } else if (!noIn.isHasMascarilla() && noIn.checkDistance(in)) {
-        return 0.30;
+      if (noIn.isHasMascarilla()) {
+        if (in.checkDistance(noIn)) {
+          return 0.2f;
+        } else {
+          return 0.3f;
+        }
       } else {
-        return 0.40;
+        if (in.checkDistance(noIn)) {
+          return 0.3f;
+        } else {
+          return 0.4;
+        }
       }
     } else {
-      if (noIn.isHasMascarilla() && noIn.checkDistance(in)) {
-        return 0.40;
-      } else if (noIn.isHasMascarilla() && !noIn.checkDistance(in)) {
-        return 0.60;
-      } else if (!noIn.isHasMascarilla() && noIn.checkDistance(in)) {
-        return 0.80;
+      if (noIn.isHasMascarilla()) {
+        if (in.checkDistance(noIn)) {
+          return 0.4f;
+        } else {
+          return 0.6f;
+        }
       } else {
-        return 0.90;
+        if (in.checkDistance(noIn)) {
+          return 0.8f;
+        } else {
+          return 0.9;
+        }
       }
     }
   }

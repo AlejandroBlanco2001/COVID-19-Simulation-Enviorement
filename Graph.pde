@@ -205,8 +205,8 @@ class Graph {
       System.out.println("---------------------- RUTA MÁS PROBABLE DE INFECCION PARA LOS SANOS --------------------");
       for (NodoG g : healthy) {
         Sano s = (Sano) g;
-        s.getMayorRiesgoContagio(new DFSImplementation(), infected); //<>// //<>//
-        System.out.println(s.toString()); //<>// //<>//
+        s.getMayorRiesgoContagio(new DFSImplementation(),infected);
+        System.out.println(s.toString()); 
       }
     }
     tablas.add(table);

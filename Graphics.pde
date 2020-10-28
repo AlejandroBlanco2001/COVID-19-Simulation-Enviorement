@@ -4,13 +4,19 @@ public class Graphics {
   private float diam;
   private int cont = 0;
 
-
+  /**
+  * Constructor que se encarga de la creacion clase
+  * @param graph Grafo a dibujar
+  */
   public Graphics(Graph graph) {
     this.graph = graph;
     puntos = new Point[graph.nodes.size()];
     diam = 370/graph.nodes.size();
   }
 
+  /**
+  * Subrutina que se encarga de dibujar el grafo
+  */
   public void drawGraph() {
     cont = 0;
     drawNodes();
@@ -18,6 +24,9 @@ public class Graphics {
     updateGraph(graph);
   }
 
+  /**
+  * Subrutina que se encarga de dibujar las aristas
+  */
   public void drawEdges() {
     for (NodoG nodo : graph.nodes) {
       for (NodoG adj : nodo.adjacencyNodes) {
@@ -48,6 +57,12 @@ public class Graphics {
     }
   }
 
+  /**
+  * Metodo que se encarga de devolver si la relacion entre dos nodos es bidirecional
+  * @param adj Nodo de inicio
+  * @param nodo Nodo de destino
+  * @return {@code true} si es su relacion es bidirecional, de lo contrario, devuelve {@code false} 
+  */
   public boolean isBidireccional(NodoG adj, NodoG nodo) {
     for (NodoG adjL : adj.adjacencyNodes) {
       if (adjL.etiquetas == nodo.etiquetas) {
@@ -57,8 +72,10 @@ public class Graphics {
     return false;
   }
 
-
-
+  /**
+  * Subrutina que se encarga de redibujar el grafo
+  * @param graph Grafo a redibujar 
+  */
   public void updateGraph(Graph graph) { 
     drawEdges();
     for (NodoG nodo : graph.nodes) {
@@ -80,6 +97,9 @@ public class Graphics {
     }
   }
 
+  /**
+  * Subrutina que se encarga de dibujar los nodos
+  */
   public void drawNodes() {
     int n = 0;
     for (int i = 0; i < graph.nodes.size(); i++) {
@@ -111,9 +131,16 @@ public class Graphics {
     }
   }
 
-  private boolean isIntersected(Point[] puntos, Point punto, int m) {
+  /**
+  * Metodo que se encarga de devovler si dos nodos se intersectan
+  * @param puntos Coordenadas de los nodos en el plano
+  * @param punto Coordenada del nodo a verificar
+  * @param nodosDibujados Cantidad de nodos dibujados
+  * @return v {@code true} si se intersecta con alguno nodo, de lo contrario, retorna {@code false}
+  */
+  private boolean isIntersected(Point[] puntos, Point punto, int nodosDibujados) {
     boolean v = false;
-    for (int i = 0; i < m; i++) {
+    for (int i = 0; i < nodosDibujados; i++) {
       if ((punto.x+diam+10 > puntos[i].x && punto.x < puntos[i].x+diam) && (punto.y+diam+10 > puntos[i].y && punto.y < puntos[i].y+diam)) {
         v = true;
       }
@@ -121,6 +148,15 @@ public class Graphics {
     return v;
   }
 
+  /**
+  * Metodo que se encarga de devovler si un nodos se intersecta con una linea
+  * @param x1 Coordenada en X del punto inicial de la linea
+  * @param y1 Coordenada en Y del punto inicial de la linea
+  * @param pendiente Pendiente de la linea
+  * @param nodoI Nodo inicial
+  * @param nodoF Nodo Final
+  * @return Devuelve la etiqueta del nodo el cual tenga una interseccion con una linea
+  */ 
   private int nodeLineIntersection(float x1, float y1, float pendiente, int nodoI, int nodoF) {
     boolean nodo1 = false, nodo2 = false;
     for (float i = 30; i < 740; i++) {
@@ -144,6 +180,13 @@ public class Graphics {
     return -1;
   }
 
+  /**
+  * Metodo que se encarga de verificar si un punto esta dentro de una circunferencia, usando la formula de la distancia
+  * @param x Coordenada en X del punto
+  * @param y Coordenada en Y del punto 
+  * @param nodoEtiqueta Etiqueta de la circunferencia del nodo
+  * @return {@code true} si el punto esta dentro de la circunferencia, de lo contrario, devuelve {@code false}
+  */
   public boolean isInNodo(float x, float y, int nodoEtiqueta) {
     float deltaX = (puntos[nodoEtiqueta].x - x) * (puntos[nodoEtiqueta].x - x);
     float deltaY = (puntos[nodoEtiqueta].y - y) * (puntos[nodoEtiqueta].y - y);
@@ -154,6 +197,11 @@ public class Graphics {
       return false;
     }
   }
+
+  /**
+  * Metodo que se encarga de devolver la etiqueta del nodo
+  * @return i Etiqueta del nodo
+  */
   public int showNodo() {
     for (int i = 0; i < puntos.length; i++) {
       float deltaX = (puntos[i].x - mouseX) * (puntos[i].x - mouseX);
@@ -167,6 +215,10 @@ public class Graphics {
     return -1;
   }
 
+  /**
+  * Subrutina que se encarga de mostrar toda la informacion del nodo
+  * @param i etiqueta del nodo
+  */
   private void showInfo(int i) {
     NodoG nodoAnt = null;
     NodoG nodo = graph.getNode(i);
@@ -215,10 +267,17 @@ public class Graphics {
       }
     }
   }
+
+  /**
+  * Abstraccion de la idea de un Punto en el plano
+  */
   private class Point {
     private float x;
     private float y;
 
+    /**
+    * Constructor de la clase
+    */
     public Point(float x, float y) {
       this.x = x;
       this.y = y;

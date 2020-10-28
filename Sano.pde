@@ -1,30 +1,22 @@
 class Sano extends NodoG {
   private LinkedListC<NodoG> dangerousPath;
-  private NodoG padre;
 
   /**
    * Constructor de la clase, usa el constructor de su padre {@link Node}
    */
   public Sano(NodoG base) {
     super(base.etiquetas);
-    padre = base;
     this.adjacencyNodes = base.adjacencyNodes;
-    this.xCoord = base.getxCoord();
-    this.yCoord = base.getyCoord();
-    this.radio = base.getRadio();
+    this.aristas = base.aristas;
+    this.hasMascarilla = base.isHasMascarilla();
   }
 
-  public void update() {
-    this.xCoord = padre.getxCoord();
-    this.yCoord = padre.getyCoord();
-    this.radio = padre.getRadio();
-  }
   /**
    * Subrutina que se encarga de obtener el camino de más riesgo de contagio del Nodo Sano
    */
   public void getMayorRiesgoContagio(DFSImplementation dfs, LinkedListC<NodoG> infected) {
     for (NodoG nodo : infected) {
-      dfs.dfs(nodo, this, new LinkedListC(), new LinkedListC(), nodo);
+      dfs.dfsConGepardex(nodo, this, new LinkedListC(), new LinkedListC(), nodo);
     }
     dangerousPath = dfs.getRecorrido().getCaminoContaigoAlto();
   }

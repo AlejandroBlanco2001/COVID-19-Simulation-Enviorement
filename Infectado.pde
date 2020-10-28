@@ -6,7 +6,9 @@ class Infectado extends NodoG {
   public Infectado(NodoG base) {
     super(base.etiquetas);
     this.adjacencyNodes = base.adjacencyNodes;
+    this.aristas = base.aristas;
     this.isInfected = true;
+    this.hasMascarilla = base.isHasMascarilla();
   }
 
   /**

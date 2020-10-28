@@ -1,25 +1,29 @@
-import controlP5.*;  //<>//
+import controlP5.*; 
 
 private Graph graph;
-private boolean startA = false;
-private boolean step = false;
-private int mode = 2;
-private boolean started = true;
-private boolean createdResume = false;
-private int population = -1;
-private boolean automatic = true;
+private boolean startA;
+private boolean step;
+private int mode;
+private boolean started;
+private boolean createdResume;
+private int population;
+private boolean automatic;
 private Graphics graphics;
-private boolean infoToggled = false;
-int contador = 0;
-double time;
-double inicio; 
+private boolean infoToggled;
+private int contador;
+private double time;
+private double inicio; 
 CheckBox checkBox;
 Text t;
 ControlP5 cp5;
 
+/**
+ * Subrutina propia de Proccessing que se encarga de configurar inicialmente el software
+ */
 void setup() {
   size(1080, 720);
   cp5  = new ControlP5(this);
+  variableConfig();
   setGUI();
   surface.setTitle("COVID-19 Simulation");
   PFont p = createFont("Verdana", 10); 
@@ -27,6 +31,24 @@ void setup() {
   cp5.setFont(font);
 }
 
+/**
+ * Subrutina que se encarga de instanciar todas las variables a utilizar
+ */
+public void variableConfig() {
+  startA = false;
+  contador = 0;
+  step = false;
+  mode = 2;
+  started = true;
+  createdResume = false;
+  population = -1;
+  automatic = true;
+  infoToggled = false;
+}
+
+/**
+ * Subrutina propia de Proccesing que se encarga de ser llamada una cantidad de cuadros definidos por el software
+ */
 void draw() {
   if (startA) {
     if (!graph.isAllInfected()) {
@@ -62,6 +84,9 @@ void draw() {
   }
 }
 
+/**
+ * Subrutina que se encarga de la generacion de la interfaz grafica del software
+ */
 public void setGUI() {
   noStroke();
   background(255, 255, 255);
@@ -83,7 +108,7 @@ public void setGUI() {
     cp5.getController("peopleValues").setCaptionLabel("");
   }
   cp5.addButton("inicia").setPosition(820, 290).setSize(200, 30);
-  CColor c = new CColor(color(0,116,217),color(0, 45, 90),color(45,155,245),color(0,0,0,10),color(0));
+  CColor c = new CColor(color(0, 116, 217), color(0, 45, 90), color(45, 155, 245), color(0, 0, 0, 10), color(0));
   checkBox = cp5.addCheckBox("seleccion").setPosition(820, 260).setSize(10, 10).addItem("Salto automatico", 0).setColor(c).addItem("Salto Manual", 1).setColor(c);
   cp5.getController("inicia").setCaptionLabel("Inicia la simulacion");
   cp5.addButton("Genera_Nuevo_Grafo").setPosition(820, 330).setSize(200, 30);
@@ -100,41 +125,49 @@ public void setGUI() {
   cp5.getController("Aleatorio").setCaptionLabel("Uso aleatorio");
   stroke(0);
   strokeWeight(3);
-  line(815,480,865,480);
+  line(815, 480, 865, 480);
   stroke(199, 44, 65);
-  line(866,480,915,480);
-  text("Inicio",815,495);
-  text("Fin",874,495);
+  line(866, 480, 915, 480);
+  text("Inicio", 815, 495);
+  text("Fin", 874, 495);
   fill(255);
   stroke(0);
-  circle(800,480,25);
-  circle(930,480,25);
+  circle(800, 480, 25);
+  circle(930, 480, 25);
   fill(0);
   text(1, 795, 485);
-  text(2, 925,485);
+  text(2, 925, 485);
   fill(1, 169, 180);
   stroke(0);
-  circle(800,520,25);
+  circle(800, 520, 25);
   fill(255);
-  circle(800,560,25);
+  circle(800, 560, 25);
   stroke(66, 245, 96);
-  circle(800,600,25);
+  circle(800, 600, 25);
   stroke(230, 245, 66);
-  circle(800,640,25);
+  circle(800, 640, 25);
   fill(0);
-  text("Infectado",820,525);
-  text("Sano",820,565);
-  text("Mascarilla",820,605);
-  text("Sin mascarilla",820,645);
+  text("Infectado", 820, 525);
+  text("Sano", 820, 565);
+  text("Mascarilla", 820, 605);
+  text("Sin mascarilla", 820, 645);
 }
 
-
+/**
+ * Subrutina que se encarga de generar el archivo .html que tendra el resumen de la simulación
+ * @param graph Grafo de la simulacion
+ */
 public void buildIndex(Graph graph) {
   HTMLBuilder htmlB = new HTMLBuilder();
   htmlB.createTableHtml(graph.tablas);
   htmlB.seperateTagsTable();
 }
 
+/**
+ * Subrutina que se encarga de generar el grafo 
+ * @param modo Disposicion del uso de mascarilla por parte de los nodos
+ * @param poblacion Cantidad de nodos a generar
+ */
 private void reload(int modo, int poblacion) {
   graph = new Graph();
   graph.createNode(poblacion);
@@ -157,6 +190,9 @@ private void reload(int modo, int poblacion) {
   graphics.drawGraph();
 }
 
+/**
+ * Subrutina que se encarga de iniciar y ejecutar la simulacion
+ */
 private void simulate() {
   saveFrame("/data/temp/Day"+contador+".png");
   contador += 1;
@@ -170,29 +206,49 @@ private void simulate() {
   inicio = System.currentTimeMillis();
 }
 
+/**
+ * Subrutina que representa el comportamiento del boton "Sin Mascarilla"
+ */
 public void Sin_Mascarilla() {
   mode = 1;
 }
 
+/**
+ * Subrutina que representa el comportamiento del boton "Uso Aletaorio"
+ */
 public void Aleatorio() {
   mode = 2;
 }
 
+/**
+ * Subrutina que representa el comportamiento del boton "Mascarilla"
+ */
 public void Mascarilla() {
   mode = 0;
 }
+
+/**
+ * Subrutina que representa el comportamiento del boton "Inicia Simulacion"
+ */
 public void inicia() {
   println("ARRANCA");
   checkModeSimulation();
   if (started) {
     if (startA == false) {
-      startA = true;  
-      started = false;
-      createdResume = false;
+      if(graph != null){
+        startA = true;  
+        started = false;
+        createdResume = false;
+      }else{
+        println("GRAFO NULO O NO CREADO");
+      }
     }
   }
 }
 
+/**
+ * Subrutina que se encarga de ver cual opcion fue selecionada para el modo de reproduccion de la Simulacion 
+ */
 public void checkModeSimulation() {
   if (checkBox.getItem(0).getState() == true) {
     System.out.println("automatico");
@@ -204,11 +260,17 @@ public void checkModeSimulation() {
   }
 }
 
-
+/**
+ * Subrutina que representa el comportamiento del Slider de "Cantidad de personas"
+ * @param persona Valor en ese momento del Slider
+ */
 public void peopleValues(int persona) {
   population = persona;
 }
 
+/**
+* Subrutina que representa el comportamiento del boton de "Mostrar Resumen"
+*/
 public void Ver_Resumen() {
   if (createdResume) {
     String path = dataPath("");
@@ -219,6 +281,9 @@ public void Ver_Resumen() {
   }
 }
 
+/**
+* Subrutina que representa el comportamiento del boton de "Genera un nuevo grafo"
+*/
 public void Genera_Nuevo_Grafo() {
   println("REINICIA");
   startA = false;
@@ -231,6 +296,9 @@ public void Genera_Nuevo_Grafo() {
   reload(mode, pop);
 }
 
+/**
+* Subrutina que se encarga de reiniciar la GUI de controlP5
+*/
 public void removeCP5() {
   cp5.getController("inicia").remove();
   cp5.getController("Genera_Nuevo_Grafo").remove();
@@ -242,6 +310,9 @@ public void removeCP5() {
   checkBox.remove();
 }
 
+/**
+* Subrutina que se encarga de comportamiento del boton de "Avanzar Siguente Dia"
+*/
 public void Siguiente_Dia() {
   if (startA) { 
     println("EL OTRO DIA...");
@@ -251,6 +322,9 @@ public void Siguiente_Dia() {
   }
 }
 
+/**
+* Subrutina que se encarga de hacer que cada nodo infectado genere una infeccion
+*/
 private void avanzaGeneracion() {
   for (NodoG n : graph.infected) {
     Infectado i = (Infectado) n;
@@ -258,6 +332,11 @@ private void avanzaGeneracion() {
   }
 }
 
+/**
+* Metodo que se encarga de generar un grafo fuertemente conexo
+* @param grafo Grafo sobre el cual se construira el mismo
+* @return graph Grafo generado
+*/
 private Graph crearRanGrafo(Graph grafo) {
   NodoG[] nodos = new NodoG[grafo.nodes.size()]; 
   nodos = grafo.convertArray();
@@ -284,6 +363,9 @@ private Graph crearRanGrafo(Graph grafo) {
   return graph;
 }
 
+/**
+* Subrutina que se encarga de detectar los clicks del mouse.
+*/
 public void mousePressed() {
   if (startA) {
     time = System.currentTimeMillis();

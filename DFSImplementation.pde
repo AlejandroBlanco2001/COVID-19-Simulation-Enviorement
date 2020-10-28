@@ -1,9 +1,9 @@
-public class DFSImplementation { //<>// //<>// //<>// //<>//
+public class DFSImplementation { //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>// //<>//
   private Recorrido recorrido;
 
   /*
   * Constructor de la clase
-   */
+  */
   public DFSImplementation() {
     this.recorrido = new Recorrido();
   }
@@ -16,26 +16,27 @@ public class DFSImplementation { //<>// //<>// //<>// //<>//
    * @param camino Lista enlazada simple que se encarga de guardar el camino que ha ido recorriendo 
    * @param inicio Nodo no infectado
    */
-  public void dfs(NodoG n, NodoG f, LinkedListC<NodoG> visitados, LinkedListC<NodoG> camino, NodoG inicio) {
+   public void dfsConGepardex(NodoG n, NodoG f, LinkedListC<NodoG> visitados, LinkedListC<NodoG> camino, NodoG inicio){
     visitados.add(n);
+    if(n != inicio){
+      visitados.delete(getIndexRemove(visitados,n));
+    }
     if (n.etiquetas == f.etiquetas) {
-      StackC stack = new StackC(); //<>// //<>//
-      stack.pushS(inicio); //<>// //<>//
-      for (int i = 0; i < camino.size(); i++) { //<>// //<>//
-        stack.pushS(camino.get(i)); //<>// //<>//
-      } //<>// //<>//
-      recorrido.addP(stack); //<>// //<>//
-      stack = new StackC(); //<>// //<>//
-      stack.pushS(inicio); //<>// //<>//
-    } else {
-      LinkedListC<NodoG> vecinos = n.adjacencyNodes;
-      for (int i = 0; i < vecinos.size(); i++) {
-        NodoG y = vecinos.get(i); //<>// //<>//
-        if (!contains(visitados, y.etiquetas) && !(y.isInfected)) {  //<>// //<>//
-          visitados.add(y); //<>// //<>//
-          camino.add(y); //<>// //<>//
-          dfs(y, f, visitados, camino, inicio);
-          camino.delete(camino.size()-1);
+      StackC stack = new StackC(); 
+      stack.pushS(inicio);
+      for (int i = 0; i < camino.size(); i++) {
+        println(camino.get(i).etiquetas); //<>//
+        stack.pushS(camino.get(i)); //<>//
+      }
+      recorrido.addP(stack); //<>//
+    } else { //<>//
+      for (int i = 0; i < n.adjacencyNodes.size(); i++) { //<>//
+        NodoG y = n.adjacencyNodes.get(i); //<>//
+        if (!contains(visitados, y.etiquetas) && !y.isInfected) {
+          visitados.add(y);
+          camino.add(y); //<>//
+          dfsConGepardex(y, f, visitados, camino, inicio); //<>//
+          camino.delete(camino.size()-1); //<>//
         }
       }
     }
@@ -74,24 +75,11 @@ public class DFSImplementation { //<>// //<>// //<>// //<>//
     return 0;
   }
 
-  /*
- * Subrutina que se encarga de recorrer todos los recorridos almacenados en {@link StackC} del objeto {@link Recorrido} y mostrarlos en pantalla
-   */
-  public void showRecorridos() {
-    for (StackC pila : recorrido.recorridos) {
-      System.out.println("Camino" + " \n" + "-------------------------------------------" + "\n");
-      while (!pila.isEmpty()) {
-        System.out.print(pila.popS().etiquetas+",");
-      }
-      System.out.println("\n" + "-------------------------------------------");
-    }
-  }
-
   /**
    * Metodo que se encarga de devolver el objeto {@link Recorrido}
    * @return El objeto recorrido
    */
   public Recorrido getRecorrido() {
     return recorrido;
-  } //<>// //<>// //<>// //<>// //<>// //<>//
+  }
 }
