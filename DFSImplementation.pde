@@ -25,8 +25,7 @@ public class DFSImplementation { //<>// //<>// //<>// //<>// //<>// //<>// //<>/
       StackC stack = new StackC(); 
       stack.pushS(inicio);
       for (int i = 0; i < camino.size(); i++) {
-        println(camino.get(i).etiquetas); //<>//
-        stack.pushS(camino.get(i)); //<>//
+        stack.pushS(camino.get(i)); //<>// //<>//
       }
       recorrido.addP(stack); //<>//
     } else { //<>//

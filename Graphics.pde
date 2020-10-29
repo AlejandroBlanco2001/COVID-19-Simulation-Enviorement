@@ -233,7 +233,6 @@ public class Graphics {
         }
       }
     } else {
-
       Sano s = new Sano(nodo);
       s.getMayorRiesgoContagio(new DFSImplementation(), graph.infected);
       for (NodoG rec : s.dangerousPath) {
